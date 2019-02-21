@@ -5,7 +5,7 @@
 
 namespace sqlite_tag_db
 {
-    // Is an integer type compatible with 32-bit architectures
+    // Int type <= 32 bits
     template<class T>
     struct is_86_int : std::false_type {};
 
@@ -14,12 +14,6 @@ namespace sqlite_tag_db
 
     template<>
     struct is_86_int<char> : std::true_type {};
-
-    template<>
-    struct is_86_int<unsigned char> : std::true_type {};
-
-    template<>
-    struct is_86_int<signed char> : std::true_type {};
 
     template<>
     struct is_86_int<wchar_t> : std::true_type {};
@@ -31,21 +25,27 @@ namespace sqlite_tag_db
     struct is_86_int<char32_t> : std::true_type {};
 
     template<>
-    struct is_86_int<unsigned short> : std::true_type {};
+    struct is_86_int<uint8_t> : std::true_type {};
 
     template<>
-    struct is_86_int<short> : std::true_type {};
+    struct is_86_int<int8_t> : std::true_type {};
 
     template<>
-    struct is_86_int<unsigned int> : std::true_type {};
+    struct is_86_int<uint16_t> : std::true_type {};
 
     template<>
-    struct is_86_int<int> : std::true_type {};
+    struct is_86_int<int16_t> : std::true_type {};
+
+    template<>
+    struct is_86_int<uint32_t> : std::true_type {};
+
+    template<>
+    struct is_86_int<int32_t> : std::true_type {};
 
     template <typename T>
     constexpr bool is_86_int_v = is_86_int<T>::value;
 
-    // Is an integer type compatible with 64-bit architectures
+    // Int type > 32 bits
     template<class T>
     struct is_64_int : std::bool_constant<std::is_integral_v<T> && !is_86_int_v<T>> {};
 
